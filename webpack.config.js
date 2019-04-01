@@ -1,28 +1,30 @@
-const HtmlWebPackPlugin = require('html-webpack-plugin');
+const {resolve} = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
 module.exports = {
+    entry: {
+        index: './src/index.jsx'
+    },
+    output: {
+        path: resolve(__dirname, 'dist'),
+        filename: '[name].js'
+    },
+    resolve: {
+        extensions: ['.js', '.jsx']
+    },
     module: {
         rules: [
             {
                 test: /\.(js|jsx)$/,
-                exclude: /node_modules/,
-                use: {
-                    loader: "babel-loader"
-                }
-            },
-            {
-                test: /\.html$/,
-                use: [
-                    {
-                        loader: "html-loader"
-                    }
-                ]
+                use: 'babel-loader',
+                exclude: /node_modules/
             }
         ]
     },
     plugins: [
-        new HtmlWebPackPlugin({
-            template: "./src/index.html",
-            filename: "./index.html"
+        new HtmlWebpackPlugin({
+            title: 'React, Webpack, and Babel',
+            template: 'src/index.html'
         })
     ]
 };
